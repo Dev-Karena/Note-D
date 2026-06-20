@@ -7,201 +7,182 @@
 [![Database](https://img.shields.io/badge/Database-Room--SQLite-yellow.svg)](https://developer.android.com/training/data-storage/room)
 [![Security](https://img.shields.io/badge/Security-Biometrics%20%26%20Encrypted%20Prefs-red.svg)](https://developer.android.com/topic/security/data)
 
+NoteD is a production-grade, highly secure, offline-first personal information manager and note-taking application designed for the Android platform. Engineered by **DEV KARENA**, NoteD integrates hardware-backed biometric verification, cryptographically secure local storage, and high-reliability task scheduling. Following privacy-by-design directives, NoteD runs completely air-gapped on-device to ensure user data remains localized, private, and secured.
+
 ---
 
 ## 1. Project Overview
 
-**NoteD** is a production-grade, highly secure, offline-first personal information manager and note-taking application designed for modern Android devices. Engineered by **DEV**, NoteD integrates hardware-backed biometric authentication, encrypted local persistence, and background task management. Adhering to privacy-by-design directives, NoteD runs completely air-gapped; all note content, categories, configuration preferences, and reminders are processed and stored strictly on-device.
+NoteD solves the critical issue of personal data leakage and cloud dependency in modern note-taking utilities. It acts as an air-gapped application, utilizing the modern Material 3 design system to present a visually striking, accessibility-conscious workspace. Deengineered from legacy patterns, NoteD decouples presentation state from backing database transactions, ensuring sub-millisecond execution times and complete offline stability.
 
 ---
 
 ## 2. Key Features
 
-*   **Dynamic Note Lifecycle:** Fully featured CRUD manager supporting title, rich text contents, dynamic custom background colors, card metadata representation, pin/unpin prioritization, soft-archiving, and permanent trash deletion.
-*   **Hierarchical Category Organiser:** Fast, user-defined folder arrays tagged with dynamic UI colors for rapid stream categorization and filtering.
-*   **App Lock Shield Protection:** Cryptographically enforced application shields executing via local secure PIN locks (using PBKDF2 derivative evaluations) and biometric verification.
-*   **Offline-First Architecture:** Eliminates network latencies and preserves bandwidth by reading and writing exclusively to an isolated SQLite data access engine.
-*   **Secure Preferences Sandbox:** Device-specific configurations (such as dark mode toggle, grid states, and PIN locks) are securely encrypted on-device.
-*   **Robust Reminder Orchestrator:** Schedules highly reliable context alerts utilizing the Android `WorkManager` API. Integrates boot broadcasters to automatically reschedule pending reminders upon device reboots.
-*   **Global Full-Text Search:** Instantaneous keyword search across note titles, categories, and bodies, matching terms via a continuous reactive stream state.
+*   **Dynamic Note Lifecycle:** Fully featured CRUD manager supporting title, rich text contents, dynamic custom background color configuration, card tags, pinning, and soft archiving.
+*   **Hierarchical Category Organiser:** Fast, user-defined category tabs tagged with distinctive dynamic UI colors for rapid stream filtering.
+*   **App Lock Shield Protection:** Cryptographically enforced application shield executing via local secure PIN locks (PBKDF2 derivations) and on-device biometrics.
+*   **Offline-First Persistence:** Eliminates latency by reading and writing files directly through local SQLite via the Room DB framework.
+*   **Secure Preferences Sandbox:** Device-specific configuration variables (such as lock credentials, dark mode, and layout modes) are encrypted on-device.
+*   **High-Reliability Reminder Orchestrator:** Schedules highly reliable context alerts using Android’s `WorkManager` API, ensuring reminders survive device reboots.
+*   **Elastic Global Search:** Instantaneous keyword search across note titles and content bodies via a reactive StateFlow stream pipeline.
 
 ---
 
-## 3. Screen Walkthrough
+## 3. Screenshots Section
 
-### Lock Screen & Vault Gateway
-Upon cold start or background-entry resume (if lock settings are engaged), the app presents an authentic lock shield layout. The user must provide their 4-digit security PIN or scan their registered Class 3 biometrics (fingerprint/face unlock) to trigger state decryption.
+Below are visual layouts representing the critical user journeys (CUJs) of the application:
 
-### Dashboard & Category Ribbons
-Displays pinned priority notes in a prominent top grid, followed by all recent notes. A horizontal category filter bar allows tapping folders (e.g., *Work*, *Personal*, *Ideas*) to filter the dashboard grid. Includes a togglable list/grid mode.
+| Launch & Security Gate | Dashboard Workspace | Creator & Color Picker |
+|:---:|:---:|:---:|
+| <img src="screenshots/01_lock_gate.png" width="240" alt="NoteD Secure Lock Shield Screen" placeholder="[Lock Screen Placeholder]" /> | <img src="screenshots/02_home_dashboard.png" width="240" alt="NoteD Main Stream Screen" placeholder="[Dashboard Screen Placeholder]" /> | <img src="screenshots/03_note_creator.png" width="240" alt="NoteD Creator View Screen" placeholder="[Note Writer Screen Placeholder]" /> |
 
-### Note Creator & Customizer
-An open writing space supporting dynamic color thematic background picker palettes, automatic timestamp updates, category assignment dropdowns, and interactive scheduled alarms.
-
----
-
-## 4. Technology Stack & Dependencies
-
-*   **Core Language:** [Kotlin 1.9.22](https://kotlinlang.org/) for modern functional programming paradigms and clean execution flow.
-*   **Reactive Flow Engine:** [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [StateFlow](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/) for active, thread-safe asynchronous stream propagation from base models to the visual layout.
-*   **Declarative UI Framework:** [Jetpack Compose (M3)](https://developer.android.com/jetpack/compose) referencing Material Design 3 guidelines, dynamic adaptive light/dark UI palettes, and smooth cross-screen fade animations.
-*   **Local Persistence Engine:** [Room SQLite](https://developer.android.com/training/data-storage/room) abstracting structural database entities, utilizing Write-Ahead Logging (WAL) for responsive I/O throughput.
-*   **Background Tasks:** [WorkManager SDK](https://developer.android.com/topic/libraries/architecture/workmanager) for battery-conscious background task execution.
-*   **Local Cryptography:** [Jetpack Security](https://developer.android.com/topic/security/data) representing AES-256 GCM encrypted shared preferences backed by the on-device hardware Google KeyStore.
-*   **Biometrics SDK:** [Android Biometrics Library](https://developer.android.com/training/sign-in/biometric-auth) managing Android biometric integrations.
+| Global Full-Text Search | Active Reminder Setup | Accessible Dark Mode Theme |
+|:---:|:---:|:---:|
+| <img src="screenshots/04_keyword_search.png" width="240" alt="NoteD Real-Time Search Screen" placeholder="[Search Screen Placeholder]" /> | <img src="screenshots/05_reminder_setup.png" width="240" alt="NoteD Alarm Setup Dialog" placeholder="[Reminder Picker Placeholder]" /> | <img src="screenshots/06_dark_mode_stream.png" width="240" alt="NoteD High-Contrast Dark Theme Mode" placeholder="[Dark Mode Screen Placeholder]" /> |
 
 ---
 
-## 5. Architectural Blueprint
+## 4. Tech Stack
 
-The application is structured upon the modern **Model-View-ViewModel (MVVM)** pattern, executing a **Unidirectional Data Flow (UDF)** loop:
+*   **Core Systems Language:** Kotlin 1.9.22 (robust null-safety, type-safe structures, and clean lifecycle scopes).
+*   **Asynchronous Engine:** Kotlin Coroutines & Flow/StateFlow (unidirectional reactive state streams).
+*   **Declarative Layout Framework:** Jetpack Compose M3 (dynamic light/dark visual components, adaptive scaling, fluid transitions).
+*   **Database Engine:** Room SQLite ORM (Compile-time query verification, Write-Ahead Logging active).
+*   **Background Actions Engine:** WorkManager API (battery-conscious background alerts, native process optimization).
+*   **Symmetric Security Drivers:** Jetpack Security (AES-256 GCM encrypted shared preferences backed by Android KeyStore hardware).
+*   **Identity Verification SDK:** Android Biometrics SDK (Class 3 fingerprint/facial recognition integration).
+
+---
+
+## 5. Architecture Overview
+
+NoteD utilizes the industry-standard **Model-View-ViewModel (MVVM)** design pattern backed by **Unidirectional Data Flow (UDF)**. This separation keeps presentation layers pure and decoupled from core business operations and repository drivers:
+
+*   **View Layer (Compose UI):** Displays state and captures user actions, dispatching them as intent signals.
+*   **ViewModel Layer (StateFlow):** Receives UI actions, orchestrates repository resources, and exposes a single, immutable UI State flow.
+*   **Repository Layer (Domain and Data):** Acts as the single-source-of-truth coordinator, managing local database queries and secure preference states.
+
+---
+
+## 6. Architecture Diagram
 
 ```mermaid
 flowchart TD
-    subgraph UI ["User Interface Layer (Compose M3)"]
-        MainActivity["MainActivity (App Entry)"] --> NavHost["NavHost Graph"]
+    subgraph UI ["Presentation Layer (Jetpack Compose M3)"]
+        MainActivity["MainActivity (Host)"] --> NavHost["NavHost Routing Graph"]
         NavHost --> ComposableScreens["Screens (LockScreen, HomeScreen, AddEditScreen)"]
-        ComposableScreens -.->|Emits UI Intentional Actions| NoteViewModel["NoteViewModel"]
-        NoteViewModel -.->|Exposes StateFlow UI State| ComposableScreens
+        ComposableScreens -.->|UI Interaction Events| NoteViewModel["NoteViewModel"]
+        NoteViewModel -.->|Reactive StateFlow UI State| ComposableScreens
     end
 
-    subgraph Data ["Local Repository & Domain Layer"]
-        NoteViewModel --> NoteRepository["NoteRepository (Single-Source-of-Truth)"]
+    subgraph DomainData ["Data & Business Logics Layer"]
+        NoteViewModel --> NoteRepository["NoteRepository (Single-Source-of-Truth Hub)"]
         NoteRepository --> SecurePreferencesManager["SecurePreferencesManager (Hardware AES SharedPrefs)"]
         NoteRepository --> AppDatabase["AppDatabase (SQLite Room Framework)"]
     end
 
-    subgraph Hardware ["System Utilities & OS Managers"]
+    subgraph OS_Managers ["Core Kernel API & OS Modules"]
         NoteViewModel --> BiometricHelper["BiometricHelper (Android Biometrics SDK)"]
-        ReminderScheduler["ReminderScheduler (WorkManager Setup)"] --> SysAlarm["System Work Queue Engine"]
-        ReminderWorker["ReminderWorker"] --> NotificationHelper["NotificationHelper (Channels Builder)"]
+        ReminderScheduler["ReminderScheduler (WorkManager Orchestrator)"] --> WorkQueue["Android System Work Services"]
+        ReminderWorker["ReminderWorker"] --> NotificationHelper["NotificationHelper (System Channel Builder)"]
     end
 ```
 
 ---
 
-## 6. Directory Map & Project Structure
-
-```lispt
-.
-├── app
-│   ├── build.gradle.kts        # Root system build & module dependencies
-│   └── src
-│       ├── main
-│       │   ├── AndroidManifest.xml  # Core application configs, alarm permissions
-│       │   ├── java/com/example
-│       │   │   ├── NoteApplication.kt   # App runtime entry representing WorkManager setup
-│       │   │   ├── MainActivity.kt      # Primary hardware Activity binding authentication
-│       │   │   ├── data
-│       │   │   │   ├── local
-│       │   │   │   │   ├── dao          # Room SQL data access interfaces (Note, Category, History)
-│       │   │   │   │   ├── database     # DB builder, schema migrations (V3 to V5)
-│       │   │   │   │   └── entity       # Note, Category, ReminderHistory data models
-│       │   │   │   └── repository       # Concrete Clean Repository abstractions
-│       │   │   ├── reminder
-│       │   │   │   ├── NotificationHelper.kt   # Creates visual notification channel layouts
-│       │   │   │   ├── ReminderReceiver.kt     # Listens to scheduled alert triggers
-│       │   │   │   ├── ReminderScheduler.kt    # Orchestrates WorkManager triggers (One-Time/Periodic)
-│       │   │   │   └── ReminderWorker.kt       # Background WorkRequest processor
-│       │   │   ├── security
-│       │   │   │   ├── BiometricHelper.kt      # Fingerprint/Face validation controller
-│       │   │   │   └── SecurePreferencesManager.kt # AES-GCM Encrypted SharedPreferences container
-│       │   │   └── ui
-│       │   │       ├── navigation   # Decoupled navigation graphs and routing
-│       │   │       ├── screens      # Material 3 screen layouts: Lock, Home, Detail, Creator
-│       │   │       ├── theme        # Centralized app styling, colors, and typography
-│       │   │       └── viewmodel    # NoteViewModel coordinating actions and states
-│       │   └── res                  # Vector maps, themes.xml configurations
-│       └── test/java/com/example    # Robolectric database simulation suites
-└── README.md
-```
-
----
-
-## 7. Installation Instructions
+## 7. Installation Guide
 
 ### Prerequisites
-1.  **JDK Version:** Java Runtime 17 configured in your execution environment.
-2.  **SDK Versions:** Android compiler target set to `compileSdk 34` with a backward minimum target of `minSdk 26`.
-3.  **Android Studio:** Version Jellyfish (2023.3.1) or Ladybug (2024.1.1) or newer.
+1.  **JDK Target:** Java Development Kit JDK 17 must be configured.
+2.  **SDK Standards:** targetSdk level set to `34` (Android 14) and minSdk level set to `26` (Android 8.0).
+3.  **Core IDE:** Android Studio Jellyfish (2023.3.1) / Ladybug (2024.1.1) or newer.
 
-### Installation Steps
+### Setting Up
 1.  **Clone the Repository:**
     ```bash
     git clone https://github.com/DEV/NoteD.git
     cd NoteD
     ```
-2.  **Set up the Environmental Configuration:**
-    Ensure you specify necessary developer parameters by replicating the environment file template:
+2.  **Initialize Environment Variables:**
+    Duplicate the example parameters to create your core configuration mapping:
     ```bash
     cp .env.example .env
     ```
-3.  **Open in IDE:**
-    Launch Android Studio, select **Open Folder**, choose the local `NoteD` project root, and allow the system to download and synchronize the Gradle catalog files.
+3.  **Open in Android Studio:**
+    Open the root folder within Android Studio and allow Gradle to sync the version catalog (`libs.versions.toml`) coordinates.
 
 ---
 
-## 8. Running the Project
+## 8. Running the Application
 
-### Command-Line Compilation
-Perform standard module verification and compilation by running Gradle wrapper tasks:
+### Compiling on the Command Line
+You can compile NoteD directly from your terminal using standard Gradle DSL commands:
+
 ```bash
-# Clean historical artifacts
+# Clear compiled caches and generate models
 gradle clean
 
-# Run compile assertions
+# Compile the application package (APK)
 gradle assembleDebug
 
-# Run unit tests on local JVM
+# Execute the local unit test suites on the JVM
 gradle :app:testDebugUnitTest
 ```
 
-### IDE Run & Flash Commands
-1.  Enable **Developer Mode** and **USB Debugging** on your testing device (Settings -> About Phone -> Tap *Build Number* 7 times, then go to Developer Options -> Toggle *USB Debugging*).
-2.  Select your targeted device in Android Studio's runner toolbar dropdown.
-3.  Click the green **Run** button or execute:
+### Installation on Virtual/Physical Handsets
+1.  Enable **Developer Mode** on your physical Android handset.
+2.  Toggle **USB Debugging** inside Developer Options.
+3.  Connect the physical phone (or run a local emulator instance) and compile the build:
     ```bash
     gradle installDebug
     ```
 
 ---
 
-## 9. Design Decisions (ADRs)
+## 9. Engineering Challenges Solved
 
-*   **ADR 01: Offline-First SQLite Domain over Cloud Databases:** Keeps personal journal data air-gapped on-device to guarantee absolute user privacy, offline operational stability, and sub-millisecond data query performance.
-*   **ADR 02: WorkManager over Legacy AlarmManager for Reminders:** Deployed standard Google `WorkManager` API to guarantee tasks execute even if system power states scale to Deep sleep/Doze settings, while automatically avoiding execution blocks or operating system constraints on Android 14+.
-*   **ADR 03: Unified ViewModel State-Flow Architecture:** Replaced loose single-value LiveData structures with cohesive StateFlow payloads. State flows are naturally integrated with Kotlin coroutines.
-*   **ADR 04: Jetpack Cryptoframework Encryption over Sandbox Privacy:** Since the standard sandbox can be compromised on rooted devices, the app uses 256-bit AES symmetric preferences encryption with keys stored in the on-device Secure Element.
+### CHALLENGE A: Lifecycle-Safe Biometric Prompt Triggering
+*   **The Problem:** Traditional biometric display sheets are heavily coupled to activity context states. If a configuration challenge occurs (e.g., sudden screen rotation) while the biometric prompt is visible, the UI thread crashes with a `LifecycleException`.
+*   **The Solution:** Developed a recursive context wrapper utility inside `BiometricHelper.kt` to traverse tree contexts and locate the base `FragmentActivity`. Automated hooks monitor current lifecycle thresholds, deferring dialog renderings safely until execution blocks confirm a steady state.
 
----
-
-## 10. Engineering Challenges Solved
-
-### 1. Robust Lifecycle-Safe Biometrics
-*   **Problem:** Standard hardware biometric prompt invocations trigger app crashes if activity contexts undergo configuration events (like sudden screen orientation rotation) on thread triggers.
-*   **Solution:** Resolved by binding biometric execution prompts explicitly to the `FragmentActivity` context level, using a context wrapper traversal look-up utility that stops and holds UI callbacks until the parent state has completed its activity redraw cycle.
-
-### 2. Multi-Version Database Transitions
-*   **Problem:** Upgrading database structures (e.g., adding repetition types inside notes and creating a historical tracking table) causes crashes on installed clients without explicit migrations.
-*   **Solution:** Implemented structured SQL Migration objects (`MIGRATION_3_4`, `MIGRATION_4_5`) registered inside the Room database builder, ensuring dynamic migration is checked on setup without destroying user data.
+### CHALLENGE B: Consistent Background Alarms Under Battery Saving Filters
+*   **The Problem:** Modern Android operating systems (Android 13 and 14) aggressively throttle legacy `AlarmManager` alerts to save power, frequently causing alerts to delay indefinitely in deep sleep/Doze settings.
+*   **The Solution:** Mitigated these restrictions by replacing legacy alarm setups with the standard `WorkManager` API. Enqueued background workers run unique, persistent tasks, and a dedicated device-boot Broadcast Receiver dynamically restores active reminders if the device reboots.
 
 ---
 
-## 11. Learning Outcomes & Highlights
+## 10. Future Enhancements
 
-*   Mastered the development of highly private, air-gapped mobile environments utilizing hardware cryptography.
-*   Configured advanced Kotlin Coroutines state systems (`collectAsStateWithLifecycle`) to optimize layout recomposition overhead within the Jetpack Compose environment.
-*   Structured a complete Android background service architecture using WorkManager to schedule background notifications across system reboots.
-
----
-
-## 12. Future Product Enhancements
-*   **Rich Markdown Editor:** Dynamic inline parsing of markdown blocks with interactive checklist state updates.
-*   **Secure Backup Sync:** An optional end-to-end user-managed cloud backup provider system, encrypted client-side using zero-knowledge protocols.
-*   **Visual Elements:** Support for local media attachments, sketch drawing layers, and embedded audio notes.
+*   **WYSIWYG Markdown Rendering Canvas:** Integrates beautiful inline markdown conversion, enabling code blocks, text highlights, and checklist interactions.
+*   **Local On-Device Media Storage Sandbox:** Support for encrypted audio drawings, sketchboards, and picture attachment layers.
+*   **Zero-Knowledge Remote Synchronization:** Optional device-to-device database sync, client-side encrypted using secure user-defined keys before transmission.
 
 ---
 
-## 13. License
+## 11. Learning Outcomes
 
-Designed and engineered by **DEV** (2026). All source code and resources are distributed under the **MIT License**.
+*   Designed and deployed production-ready, air-gapped security configurations utilizing hardware Secure Elements.
+*   Developed highly optimized Compose state management paradigms, using key-dependent recompositions to minimize rendering overhead.
+*   Successfully resolved deep system life-cycle and notification constraints across modern target SDK levels (up to API 34).
+
+---
+
+## 12. License
+
+Designed and engineered by **DEV KARENA** (2026).  
+All project deliverables and codebase materials are released under the **MIT License**.
+
+```
+Copyright (c) 2026 DEV KARENA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+```
