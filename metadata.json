@@ -1,0 +1,6 @@
+{
+  "name": "NoteD",
+  "description": "Secure, reactive, offline-first productivity note-taking application designed with Clean MVVM Architecture, biometric verification, and reminders.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

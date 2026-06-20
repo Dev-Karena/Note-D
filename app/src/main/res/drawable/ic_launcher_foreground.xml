@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Notepad Clipboard base-->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M34,28 h40 c3.3,0 6,2.7 6,6 v44 c0,3.3 -2.7,6 -6,6 h-40 c-3.3,0 -6,-2.7 -6,-6 v-44 c0,-3.3 2.7,-6 6,-6 z" />
+    
+    <!-- Rings / spiral binder links at the top -->
+    <path
+        android:fillColor="#FFE0E0E0"
+        android:pathData="M38,22 c-1.1,0 -2,0.9 -2,2 v6 c0,1.1 0.9,2 2,2 s2,-0.9 2,-2 v-6 c0,-1.1 -0.9,-2 -2,-2 z
+                          M54,22 c-1.1,0 -2,0.9 -2,2 v6 c0,1.1 0.9,2 2,2 s2,-0.9 2,-2 v-6 c0,-1.1 -0.9,-2 -2,-2 z
+                          M70,22 c-1.1,0 -2,0.9 -2,2 v6 c0,1.1 0.9,2 2,2 s2,-0.9 2,-2 v-6 c0,-1.1 -0.9,-2 -2,-2 z" />
+    
+    <!-- Ruler note ruling stripes -->
+    <path
+        android:fillColor="#FF5E5CE6"
+        android:pathData="M40,42 h28 v2.5 h-28 z
+                          M40,50 h28 v2.5 h-28 z
+                          M40,58 h18 v2.5 h-18 z" />
+    
+    <!-- Premium overlapping golden pen indicator -->
+    <path
+        android:fillColor="#FFFFD60A"
+        android:pathData="M70,44 L80,34 c0.8,-0.8 2,-0.8 2.8,0 L84,35.2 c0.8,0.8 0.8,2 0,2.8 L74,48 Z" />
+    <path
+        android:fillColor="#FF5E5CE6"
+        android:pathData="M70,44 L68,48 L72,46 Z" />
+</vector>
